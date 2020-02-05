@@ -1,12 +1,14 @@
-from game.state import State
-from game.building import *
-from game.tools.cost import cost
+from arenbels.game.state import State
+from arenbels.game.building import *
+from arenbels.game.tools.cost import cost
+from arenbels.game.tools.pay import pay
+from arenbels.game.tools.shuffled import shuffled
+from arenbels.game.building import *
 
 class Character:
 
     def __init__(self,female=False):
         self.female = female
-
 
     def pronoun(self):
         if self.female:
@@ -39,12 +41,12 @@ class Player(Character):
 
         Please take note of the fact that by default, it is done by an AI"""
 
-        self.ai_turn_execution(self,game)
+        self.ai_turn_execution(game)
 
     def ai_turn_execution(self,game):
         if cost(self.state.treasure,House):
-            for city in shuffle(self.state.cities):
-
+            for city in shuffled(self.state.cities):
+                city.bdg.append(House())
 
     def counselor(self):
         self.counselor_explanation = (self.name + " now has " + str(self.state.treasure) + " gold.\n")

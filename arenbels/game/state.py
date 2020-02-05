@@ -1,5 +1,5 @@
 from math import ceil
-from game.tools.increase import increase
+from arenbels.game.tools.increase import increase
 
 class State:
 

@@ -1,4 +1,4 @@
-from game.world import World
+from arenbels.game.world import World
 
 class Game:
 

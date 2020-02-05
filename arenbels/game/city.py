@@ -1,6 +1,6 @@
 from math import ceil
-from game.tools.increase import increase
-from game.region import Region
+from arenbels.game.tools.increase import increase
+from arenbels.game.region import Region
 
 class City:
 
