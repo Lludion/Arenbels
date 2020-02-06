@@ -5,6 +5,7 @@ import numpy as np
 from arenbels.game.tools.cost import cost
 from arenbels.game.tools.pay import pay
 from arenbels.game.building import *
+from arenbels.game.tools.iterators import CityIterator
 
 class City:
 
@@ -28,8 +29,12 @@ class City:
             self.region = Region()
         self.history = []
 
-    def __next__(self):
-        pass
+    def __iter__(self):
+        ''' Returns the Iterator object CityIterator
+
+        returns the hashes of the buildings in the city'''
+        return CityIterator(self)
+
     def __repr__(self):
         return "City %s:" % self.name + str((self.bdg))
 
@@ -71,10 +76,10 @@ class City:
             if cost(state.treasure,buil):
                 b = buil()
                 if not b.stackable:
-                    if hash(b) in [hash(z) for z in self.bdg]:
+                    if hash(b) in self:
                         return False
                 for req in b.required:
-                    if hash(req) not in [hash(z) for z in self.bdg]:
+                    if hash(req) not in self:
                         return False
                 self.bdg.append(b)
                 pay(state,buil)
