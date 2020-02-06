@@ -2,6 +2,9 @@ from math import ceil
 from arenbels.game.tools.increase import increase
 from arenbels.game.region import Region
 import numpy as np
+from arenbels.game.tools.cost import cost
+from arenbels.game.tools.pay import pay
+from arenbels.game.building import *
 
 class City:
 
@@ -25,7 +28,7 @@ class City:
         self.history = []
 
     def __repr__(self):
-        return "City %s:" % self.name + str(len(self.bdg))
+        return "City %s:" % self.name + str((self.bdg))
 
     def summary(self):
         txt = """ %s :
@@ -58,6 +61,19 @@ class City:
 
     def get_history(self):
         return np.array(self.history)
+
+    def add_bdg(self,state,buil):
+        #if build.stackable:
+        if cost(state.treasure,buil):
+            b = buil()
+            if not b.stackable:
+                if hash(b) in [hash(z) for z in self.bdg]:
+                    return False
+            self.bdg.append(b)
+            pay(state,buil)
+            return True
+        else:
+            return False
 
     def end_turn(self,state,game):
 

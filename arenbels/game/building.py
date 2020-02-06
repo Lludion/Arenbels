@@ -17,6 +17,9 @@ class Building:
     def __repr__(self):
         return "Building " + str(self.__class__.__name__)
 
+    def __hash__(self):
+        return hash(self.name)
+
 
 class CityCenter(Building):
     def __init__(self):
@@ -110,6 +113,7 @@ class FlowerMeadows(Building):
         super().__init__()
         self.name = "Flower Meadows"
         self.type = ["Agrarian","Environment"]
+        self.cost = 200
 
     def effect(self,state,city):
         state.treasure -= 10
