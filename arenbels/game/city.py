@@ -1,11 +1,12 @@
 from math import ceil
 from arenbels.game.tools.increase import increase
 from arenbels.game.region import Region
+import numpy as np
 
 class City:
 
     def __init__(self,name="CityName",region=None):
-        self.name = name
+        self.name = name#It is important that this name stays unique during the whole game.
         self.pop = 0#population
         self.oldPop = 0#population at last turn
         self.oldPopBdg = 0#population at last turn due to buildings
@@ -24,7 +25,7 @@ class City:
         self.history = []
 
     def __repr__(self):
-        return "City %s:" % self.name + str(self.bdg)
+        return "City %s:" % self.name + str(len(self.bdg))
 
     def summary(self):
         txt = """ %s :
@@ -54,6 +55,9 @@ class City:
         useful for numpy display"""
 
         return (self.pop,self.happiness,self.health,self.globalTrade,self.moneyFromPop,self.agrarianWealth,self.localTrade)
+
+    def get_history(self):
+        return np.array(self.history)
 
     def end_turn(self,state,game):
 

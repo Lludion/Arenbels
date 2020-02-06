@@ -30,7 +30,7 @@ class Player(Character):
     def play_turn(self,game):
         self.turn_execution(game)
         self.state.end_turn(game)
-        self.counselor()
+        self.counselor(game)
 
     def turn_execution(self,game):
         """ Execution of the chosen actions during a turn.
@@ -40,8 +40,7 @@ class Player(Character):
         pass
 
     def counselor(self,game):
-
-    def counselor(self):
+        if game.verbose:
             self.counselor_explanation = (self.name + " now has " + str(self.state.treasure) + " gold.\n")
             self.counselor_explanation += (self.pronoun() + " gained " + str(self.state.gain()) + " money last turn.\n")
             #self.counselor_explanation += ("Of which " + str(self.state.moneyFromTrade) + " came from Trade.\n")

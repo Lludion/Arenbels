@@ -12,7 +12,12 @@ class Game:
         self.turn = 1
         self.season = 0
 
+
     def set_parameters(self):
+        #Whether it prints things.
+        self.verbose = False
+        #Name of the infos in the city_history panel
+        self.city_info = ["Population","Happiness","Health","Global Trade","$(pop)","$(agr)","$(tra)"]
         #Number of turns it takes to reach the actual tradeOBJ value
         self.tradeChangeSpeed = 10
         #Number of turns it takes to reach the actual popOBJ value
