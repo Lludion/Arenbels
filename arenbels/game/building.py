@@ -111,6 +111,7 @@ class Fields(Building):
         self.name = "Fields"
         self.type = ["Agrarian"]
         self.stackable = True
+        self.cost = 200
 
     def effect(self,state,city):
         city.agrarianWealth += 5
@@ -313,7 +314,7 @@ class Monastery(Building):
 class Cathedral(Building):
     def __init__(self):
         super().__init__()
-        self.name = "Church"
+        self.name = "Cathedral"
         self.type = ["Religious"]
         self.required = [Church,PavedRoads,Drains,Quarter]
         self.cost = 22000
@@ -359,3 +360,12 @@ class Factory(Building):
         city.globalTrade += 100
         city.happy -= 15
         city.health -= 50
+
+class No(Building):
+    """ Used in AI to say: do not build anything. Used with random.choose"""
+    def __init__(self):
+        super().__init__()
+        self.name = "None"
+        self.type = []
+        self.cost = 9999999
+        self.required = [No]

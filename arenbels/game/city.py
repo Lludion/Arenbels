@@ -6,6 +6,7 @@ from arenbels.game.tools.cost import cost
 from arenbels.game.tools.pay import pay
 from arenbels.game.building import *
 from arenbels.game.tools.iterators import CityIterator
+from random import choice
 
 class City:
 
@@ -73,8 +74,12 @@ class City:
     def add_bdg(self,state,buil):
         """ One can construct up to one building per city per turn."""
         if not self.alreadybuilt:
-            if cost(state.treasure,buil):
+            try:
                 b = buil()
+            except TypeError:
+                buil = choice(buil)
+                b = buil()
+            if cost(state.treasure,buil):
                 if not b.stackable:
                     if hash(b) in self:
                         return False
