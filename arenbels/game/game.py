@@ -43,4 +43,8 @@ class Game:
         """
         self.season = (self.season + 1) % 4
 
+        for player in self.players:
+            for city in player.state.cities:
+                city.region.set_seasonBonus(self.season)
+
 

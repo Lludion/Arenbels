@@ -87,7 +87,12 @@ class City:
         if self.popOBJ < self.pop - 10:
             self.happy -= min((self.pop - self.popOBJ)//10,10)
 
+        #Season changes
+        self.happy += self.region.seasonHappy
+        self.agrarianWealth = ceil(self.agrarianWealth * ((100 + self.region.seasonBonus) /100))
+
         self.happiness += self.happy
+
         if self.happiness <= -100:
             self.happiness = -100
             print("City : %s has Unrest !" % self.name)
@@ -98,7 +103,7 @@ class City:
 
             #Adding money to the state
             state.treasure += self.localTrade
-            state.treasure += ceil(self.agrarianWealth * ((100 + self.region.seasonBonus) /100))
+            state.treasure += self.agrarianWealth
             self.moneyFromPop = ceil(self.pop * ((self.happiness+300) /400))
             state.treasure += self.moneyFromPop
 
