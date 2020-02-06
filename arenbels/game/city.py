@@ -81,10 +81,10 @@ class City:
                 b = buil()
             if cost(state.treasure,buil):
                 if not b.stackable:
-                    if hash(b) in self:
+                    if b.name in self:
                         return False
                 for req in b.required:
-                    if hash(req) not in self:
+                    if req().name not in self:
                         return False
                 self.bdg.append(b)
                 pay(state,buil)

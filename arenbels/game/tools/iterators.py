@@ -12,6 +12,6 @@ class CityIterator():
     def __next__(self):
         if self.current < self.high:
             self.current += 1
-            return hash(self.city.bdg[self.current-1])
+            return self.city.bdg[self.current-1].name
         else:
             raise StopIteration
