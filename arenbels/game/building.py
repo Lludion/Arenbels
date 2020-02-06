@@ -20,6 +20,12 @@ class Building:
     def __hash__(self):
         return hash(self.name)
 
+    def __iter__(self):
+        return self
+
+    def __getitem__(self, key):
+        return self
+
 
 class CityCenter(Building):
     def __init__(self):
@@ -90,11 +96,14 @@ class Market(Building):
     def __init__(self):
         super().__init__()
         self.name = "Marketplace"
-        self.type = ["Market"]
+        self.type = ["Trade"]
+        self.cost = 1500
+        stackable = True
 
     def effect(self,state,city):
         city.localTrade += 2
         city.globalTrade += 40
+        city.health -= 1
 
 class Fields(Building):
     def __init__(self):
@@ -116,7 +125,8 @@ class FlowerMeadows(Building):
         self.cost = 200
 
     def effect(self,state,city):
-        state.treasure -= 10
+        state.treasure -= 15
+        city.agrarianWealth += 5
         city.popOBJ += 10
         city.health += 5
         city.happy += 2
@@ -174,6 +184,7 @@ class LittlePark(Building):
         super().__init__()
         self.name = "Little Park"
         self.type = ["Environment"]
+        self.cost = 200
 
     def effect(self,state,city):
         state.treasure -= 5
@@ -184,28 +195,35 @@ class MediumPark(Building):
         super().__init__()
         self.name = "Medium Park"
         self.type = ["Environment"]
+        self.required = [LittlePark]
+        self.cost = 1000
 
     def effect(self,state,city):
         state.treasure -= 15
         city.globalTrade += 1
         city.happy += 2
+        city.health += 10
 
 class HugePark(Building):
     def __init__(self):
         super().__init__()
         self.name = "Huge Park"
         self.type = ["Environment"]
+        self.required = [MediumPark]
+        self.cost = 3000
 
     def effect(self,state,city):
         state.treasure -= 50
         city.globalTrade += 4
         city.happy += 6
+        city.health += 50
 
 class Fountain(Building):
     def __init__(self):
         super().__init__()
         self.name = "Fountain"
         self.type = ["Environment","Sanitation"]
+        self.stackable = False
 
     def effect(self,state,city):
         state.treasure -= 2
@@ -217,12 +235,13 @@ class Fountain(Building):
 class Drains(Building):
     def __init__(self):
         super().__init__()
-        self.name = "Sewer"
+        self.name = "Drains"
         self.type = ["Sanitation"]
+        self.stackable = True
 
     def effect(self,state,city):
         state.treasure -= 40
-        state.popOBJ += 10
+        city.popOBJ += 10
         city.health += 100
 
 class Sewer(Building):
@@ -234,8 +253,23 @@ class Sewer(Building):
 
     def effect(self,state,city):
         state.treasure -= 100 + ceil(city.oldPop/100)
-        state.popOBJ += 20
+        city.popOBJ += 20
         city.health += 150 + ceil(city.oldPop/100)
+
+class PavedRoads(Building):
+    def __init__(self):
+        super().__init__()
+        self.name = "Paved Roads"
+        self.type = ["Sanitation","State","Trade"]
+        self.required = [CityCenter]
+        cost = 10000
+
+    def effect(self,state,city):
+        state.treasure -= 5
+        city.popOBJ += 20
+        city.localTrade += 5
+        city.globalTrade += min(ceil(city.oldPop/10),100)
+        city.health += ceil(city.oldPop/20)
 
 class Chapel(Building):
     def __init__(self):

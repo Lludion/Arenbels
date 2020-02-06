@@ -23,10 +23,13 @@ class City:
         self.localTrade = 0
         self.agrarianWealth = 0
         self.globalTrade = 0#contribution of the city to global TradeOBJ
+        self.alreadybuilt = False# renews on each turn.
         if region is None:
             self.region = Region()
         self.history = []
 
+    def __next__(self):
+        pass
     def __repr__(self):
         return "City %s:" % self.name + str((self.bdg))
 
@@ -63,17 +66,23 @@ class City:
         return np.array(self.history)
 
     def add_bdg(self,state,buil):
-        #if build.stackable:
-        if cost(state.treasure,buil):
-            b = buil()
-            if not b.stackable:
-                if hash(b) in [hash(z) for z in self.bdg]:
-                    return False
-            self.bdg.append(b)
-            pay(state,buil)
-            return True
-        else:
-            return False
+        """ One can construct up to one building per city per turn."""
+        if not self.alreadybuilt:
+            if cost(state.treasure,buil):
+                b = buil()
+                if not b.stackable:
+                    if hash(b) in [hash(z) for z in self.bdg]:
+                        return False
+                for req in b.required:
+                    if hash(req) not in [hash(z) for z in self.bdg]:
+                        return False
+                self.bdg.append(b)
+                pay(state,buil)
+                self.alreadybuilt = True
+                print(self.name,"built",b.name)
+                return True
+            else:
+                return False
 
     def end_turn(self,state,game):
 
@@ -103,6 +112,14 @@ class City:
         if self.popOBJ < self.pop - 10:
             self.happy -= min((self.pop - self.popOBJ)//10,10)
 
+        #Diseases
+        if self.health < 0:
+            self.happiness += self.health//10
+            self.pop += self.health//20 + 1
+        if self.health >= 20:
+            self.happiness += 1
+
+
         #Season changes
         self.happy += self.region.seasonHappy
         self.agrarianWealth = ceil(self.agrarianWealth * ((100 + self.region.seasonBonus) /100))
@@ -124,3 +141,4 @@ class City:
             state.treasure += self.moneyFromPop
 
         self.history.append(self.send_info())
+        self.alreadybuilt = False
