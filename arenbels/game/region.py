@@ -31,6 +31,9 @@ class Region:
             self.seasonBonus = self.winterBonus
             self.seasonHappy = self.winterHappy
 
+    def ruralSum(self):
+        return self.springBonus + self.winterBonus + self.autumnBonus + self.summerBonus
+
 class Desertic(Region):
     """ Very hot summers. Good food production all year round."""
 
@@ -38,13 +41,11 @@ class Desertic(Region):
         super().__init__(name,game)
 
         #Bonus to agrarian wealth
-        self.seasonBonus = 0
         self.winterBonus = 30
         self.springBonus = 10
         self.summerBonus = 30
         self.autumnBonus = 30
 
-        self.seasonHappy = 0
         self.winterHappy = 1
         self.springHappy = 1
         self.summerHappy = -3
@@ -57,13 +58,11 @@ class Continental(Region):
         super().__init__(name,game)
 
         #Bonus to agrarian wealth
-        self.seasonBonus = 0
         self.winterBonus = -50
         self.springBonus = 10
         self.summerBonus = 30
         self.autumnBonus = 60
 
-        self.seasonHappy = 0
         self.winterHappy = -2
         self.springHappy = 2
         self.summerHappy = -1
@@ -76,13 +75,11 @@ class Oceanic(Region):
         super().__init__(name,game)
 
         #Bonus to agrarian wealth
-        self.seasonBonus = 0
         self.winterBonus = -10
         self.springBonus = 10
         self.summerBonus = 20
         self.autumnBonus = 30
 
-        self.seasonHappy = 0
         self.winterHappy = -1
         self.springHappy = 0
         self.summerHappy = 1
@@ -95,13 +92,11 @@ class Icy(Region):
         super().__init__(name,game)
 
         #Bonus to agrarian wealth
-        self.seasonBonus = 0
         self.winterBonus = -100
         self.springBonus = -50
         self.summerBonus = -20
         self.autumnBonus = -30
 
-        self.seasonHappy = 0
         self.winterHappy = 2
         self.springHappy = 1
         self.summerHappy = 1
@@ -114,13 +109,11 @@ class Tundra(Region):
         super().__init__(name,game)
 
         #Bonus to agrarian wealth
-        self.seasonBonus = 0
         self.winterBonus = -30
         self.springBonus = -20
         self.summerBonus = 30
         self.autumnBonus = 30
 
-        self.seasonHappy = 0
         self.winterHappy = -2
         self.springHappy = 0
         self.summerHappy = 1

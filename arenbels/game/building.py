@@ -44,6 +44,7 @@ class House(Building):
         self.name = "House"
         self.type = ["Housing"]
         self.stackable = True
+        self.cost = 300
 
     def effect(self,state,city):
         city.pop += 4
@@ -56,6 +57,7 @@ class Quarter(Building):
         super().__init__()
         self.name = "Quarter"
         self.type = ["Housing"]
+        self.required = [House]
 
     def effect(self,state,city):
         city.popOBJ += 60
