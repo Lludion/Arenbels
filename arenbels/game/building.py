@@ -280,3 +280,82 @@ class Chapel(Building):
     def effect(self,state,city):
         state.treasure -= 20
         city.happy += 2
+
+class Church(Building):
+    def __init__(self):
+        super().__init__()
+        self.name = "Church"
+        self.type = ["Religious"]
+        self.required = [Chapel]
+        self.cost = 1500
+        self.stackable = True
+
+    def effect(self,state,city):
+        state.treasure -= 50
+        city.happy += 4
+
+class Monastery(Building):
+    def __init__(self):
+        super().__init__()
+        self.name = "Monastery"
+        self.type = ["Religious"]
+        self.required = [Chapel]
+        self.cost = 1100
+
+    def effect(self,state,city):
+        state.treasure -= 40
+        city.happy += 1
+        city.globalTrade += 40
+        city.popOBJ += 20
+        city.health += 5
+
+
+class Cathedral(Building):
+    def __init__(self):
+        super().__init__()
+        self.name = "Church"
+        self.type = ["Religious"]
+        self.required = [Church,PavedRoads,Drains,Quarter]
+        self.cost = 22000
+
+    def effect(self,state,city):
+        state.treasure -= 200
+        city.happy += 10
+        city.globalTrade += 50
+
+class Forge(Building):
+    def __init__(self):
+        super().__init__()
+        self.name = "Forge"
+        self.type = ["Industry"]
+
+    def effect(self,state,city):
+        city.localTrade += 50
+        city.happy -= 2
+
+class Workshop(Building):
+    def __init__(self):
+        super().__init__()
+        self.name = "Workshop"
+        self.type = ["Industry"]
+        self.stackable = True
+        self.cost = 2000
+
+    def effect(self,state,city):
+        city.localTrade += 100
+        city.happy -= 4
+        city.health -= 10
+
+class Factory(Building):
+    def __init__(self):
+        super().__init__()
+        self.name = "Factory"
+        self.type = ["Industry"]
+        self.cost = 8000
+        self.required = [Workshop,Forge]
+
+    def effect(self,state,city):
+        city.localTrade += 500
+        city.globalTrade += 100
+        city.happy -= 15
+        city.health -= 50
