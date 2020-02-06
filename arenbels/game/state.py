@@ -1,5 +1,6 @@
 from math import ceil
 from arenbels.game.tools.increase import increase
+import numpy as np
 
 class State:
 
@@ -35,17 +36,32 @@ class State:
         #Global bonus value for health in cities of this state
         self.globHealth = 0
 
+        #History
+        self.history = []
+
 
     def __repr__(self):
         txt = """
         State Name : %s
+        Treasure: %s
         Cities : %s
         Trade : %s
         TradeOBJ : %s
         MoneyFromTrade : %s
-
-        """ % (self.name,str(self.cities),self.trade,self.tradeOBJ,self.moneyFromTrade)
+        globhealth :
+        """ % (self.name,str(self.treasure),str(self.cities),self.trade,self.tradeOBJ,self.moneyFromTrade,self.globHealth)
         return txt
+
+    def send_info(self):
+        """ returns:
+        Treasure
+        Trade
+        GlobHealth
+        Gain"""
+        return (self.treasure,self.trade,self.globHealth,self.gain())
+
+    def get_history(self):
+        return np.array(self.history)
 
     def gain(self):
         return self.treasure - self.old_t
@@ -75,3 +91,5 @@ class State:
 
         self.moneyFromTrade = ceil(self.trade*(self.tradeImposition)/100)
         self.treasure += self.moneyFromTrade
+
+        self.history.append(self.send_info())

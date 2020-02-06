@@ -24,12 +24,12 @@ def city(g,name=None,spec=None,comp=False,begin=0,end=None):
             for c in p.state.cities:
                 plt.plot(c.get_history()[:,spec:spec+1],label=c.name)
 
-            plt.legend(loc="best")
-            plt.show()
+        plt.legend(loc="best")
+        plt.show()
     else:
         for p in g.players:
             for c in p.state.cities:
-                if c.name == name:
+                if c.name == name:#If it is the right city :
                     if spec is not None:
                         spec %= len(g.city_info)
                         plt.ylabel(g.city_info[spec])
@@ -42,3 +42,29 @@ def city(g,name=None,spec=None,comp=False,begin=0,end=None):
 
         plt.legend(loc="best")
         plt.show()
+
+
+def state(g,name=None,spec=None,comp=False,begin=0,end=None):
+    if end is None:
+        end = g.turn
+    plt.xlabel('Turn')
+    if name is None:
+        if spec is None:
+            spec = 0
+        spec %= len(g.state_info)
+        plt.ylabel(g.state_info[spec])
+        for p in g.players:
+            plt.plot(p.state.get_history()[:,spec:spec+1],label=p.state.name)
+
+        plt.legend(loc="best")
+        plt.show()
+    else:
+        for p in g.players:
+            if p.state.name == name:#If it is the right city :
+                if spec is not None:
+                    spec %= len(g.state_info)
+                    plt.ylabel(g.state_info[spec])
+                    plt.plot(c.get_history()[:,spec:spec+1],label=p.state.name)
+                else:
+                    for spec_i in range(len(g.state_info)):
+                        plt.plot(c.get_history()[:,spec_i:spec_i+1],label=g.state_info[spec_i])

@@ -18,6 +18,8 @@ class Game:
         self.verbose = False
         #Name of the infos in the city_history panel
         self.city_info = ["Population","Happiness","Health","Global Trade","$(pop)","$(agr)","$(tra)"]
+        #Name of the infos in the state_history panel
+        self.state_info = ["Treasure","Trade","Global Health","Gain"]
         #Number of turns it takes to reach the actual tradeOBJ value
         self.tradeChangeSpeed = 10
         #Number of turns it takes to reach the actual popOBJ value
