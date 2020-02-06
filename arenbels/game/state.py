@@ -45,10 +45,10 @@ class State:
         State Name : %s
         Treasure: %s
         Cities : %s
-        Trade : %s
-        TradeOBJ : %s
-        MoneyFromTrade : %s
-        globhealth :
+        Trade : %d
+        TradeOBJ : %d
+        MoneyFromTrade : %d
+        globhealth :%d
         """ % (self.name,str(self.treasure),str(self.cities),self.trade,self.tradeOBJ,self.moneyFromTrade,self.globHealth)
         return txt
 

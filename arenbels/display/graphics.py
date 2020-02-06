@@ -1,9 +1,35 @@
 
 import numpy as np
 import matplotlib.pyplot as plt
+from arenbels.tools.wrap import wrap
 
+def plot_show(*args,**kwargs):
+    plt.legend(loc="best")
+    plt.show()
 
+def plot_hist(c,spec,label):
+    plt.plot(c.get_history()[:,spec:spec+1],label=label)
 
+def plot_named(stat,name,info,spec):
+    """ plot of charasteritics of one named entity """
+    if stat.name == name:#If it is the right entity :
+        if spec is not None:
+            spec %= len(info)
+            plt.ylabel(info[spec])
+            plot_hist(stat,spec,stat.name)
+        else:
+            for spec_i in range(len(info)):
+                plot_hist(stat,spec_i,info[spec_i])
+
+def preplot_unnamed(info,spec):
+    """ all the work before the plot_hist is done here (for unnamed plots)"""
+    if spec is None:
+        spec = 0
+    spec %= len(info)
+    plt.ylabel(info[spec])
+    return spec
+
+@wrap(post=plot_show)
 def city(g,name=None,spec=None,comp=False,begin=0,end=None):
     """ g is a game
     name is the name of the city you wnat to study.
@@ -16,55 +42,26 @@ def city(g,name=None,spec=None,comp=False,begin=0,end=None):
         end = g.turn
     plt.xlabel('Turn')
     if name is None:
-        if spec is None:
-            spec = 0
-        spec %= len(g.city_info)
-        plt.ylabel(g.city_info[spec])
+        spec = preplot_unnamed(g.city_info,spec)
         for p in g.players:
             for c in p.state.cities:
-                plt.plot(c.get_history()[:,spec:spec+1],label=c.name)
-
+                plot_hist(c,spec,c.name)
         plt.legend(loc="best")
         plt.show()
     else:
         for p in g.players:
             for c in p.state.cities:
-                if c.name == name:#If it is the right city :
-                    if spec is not None:
-                        spec %= len(g.city_info)
-                        plt.ylabel(g.city_info[spec])
-                        plt.plot(c.get_history()[:,spec:spec+1],label=c.name)
-                    else:
-                        for spec_i in range(len(g.city_info)):
-                            plt.plot(c.get_history()[:,spec_i:spec_i+1],label=g.city_info[spec_i])
+                plot_named(c,name,g.city_info,spec)
 
-
-
-        plt.legend(loc="best")
-        plt.show()
-
-
+@wrap(post=plot_show)
 def state(g,name=None,spec=None,comp=False,begin=0,end=None):
     if end is None:
         end = g.turn
     plt.xlabel('Turn')
     if name is None:
-        if spec is None:
-            spec = 0
-        spec %= len(g.state_info)
-        plt.ylabel(g.state_info[spec])
+        spec = preplot_unnamed(g.state_info,spec)
         for p in g.players:
-            plt.plot(p.state.get_history()[:,spec:spec+1],label=p.state.name)
-
-        plt.legend(loc="best")
-        plt.show()
+            plot_hist(p.state,spec,p.state.name)
     else:
         for p in g.players:
-            if p.state.name == name:#If it is the right city :
-                if spec is not None:
-                    spec %= len(g.state_info)
-                    plt.ylabel(g.state_info[spec])
-                    plt.plot(c.get_history()[:,spec:spec+1],label=p.state.name)
-                else:
-                    for spec_i in range(len(g.state_info)):
-                        plt.plot(c.get_history()[:,spec_i:spec_i+1],label=g.state_info[spec_i])
+            plot_named(p.state,name,g.state_info,spec)
