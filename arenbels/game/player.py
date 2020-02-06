@@ -1,9 +1,5 @@
 from arenbels.game.state import State
 from arenbels.game.building import *
-from arenbels.game.tools.cost import cost
-from arenbels.game.tools.pay import pay
-from arenbels.game.tools.shuffled import shuffled
-from arenbels.game.building import *
 
 class Character:
 
@@ -39,27 +35,24 @@ class Player(Character):
     def turn_execution(self,game):
         """ Execution of the chosen actions during a turn.
 
-        Please take note of the fact that by default, it is done by an AI"""
+        Please take note of the fact that by default, it does nothing.
+        (previously, it launched an AI)"""
+        pass
 
-        self.ai_turn_execution(game)
-
-    def ai_turn_execution(self,game):
-        if cost(self.state.treasure,House):
-            for city in shuffled(self.state.cities):
-                city.bdg.append(House())
+    def counselor(self,game):
 
     def counselor(self):
-        self.counselor_explanation = (self.name + " now has " + str(self.state.treasure) + " gold.\n")
-        self.counselor_explanation += (self.pronoun() + " gained " + str(self.state.gain()) + " money last turn.\n")
-        #self.counselor_explanation += ("Of which " + str(self.state.moneyFromTrade) + " came from Trade.\n")
-        #self.counselor_explanation += (" Trade value : %s .\n" % str(self.state.trade))
-        self.counselor_explanation += self.state.__repr__()
+            self.counselor_explanation = (self.name + " now has " + str(self.state.treasure) + " gold.\n")
+            self.counselor_explanation += (self.pronoun() + " gained " + str(self.state.gain()) + " money last turn.\n")
+            #self.counselor_explanation += ("Of which " + str(self.state.moneyFromTrade) + " came from Trade.\n")
+            #self.counselor_explanation += (" Trade value : %s .\n" % str(self.state.trade))
+            self.counselor_explanation += self.state.__repr__()
 
-        for city in self.state.cities:
+            for city in self.state.cities:
 
-            #self.counselor_explanation += city.name + ", where " + str(city.pop) + " inhabitants live, has a happiness of " +  str(city.happiness)
-            #self.counselor_explanation += ", compared to " + str(city.happiness - city.happy) + " last turn.\n"
-            self.counselor_explanation += city.summary() + "\n"
-        self.counselor_explanation += "\n"
-        print(self.counselor_explanation)
+                #self.counselor_explanation += city.name + ", where " + str(city.pop) + " inhabitants live, has a happiness of " +  str(city.happiness)
+                #self.counselor_explanation += ", compared to " + str(city.happiness - city.happy) + " last turn.\n"
+                self.counselor_explanation += city.summary() + "\n"
+            self.counselor_explanation += "\n"
+            print(self.counselor_explanation)
 

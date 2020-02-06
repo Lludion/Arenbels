@@ -81,11 +81,11 @@ class City:
         self.pop += increase(self.pop, self.popOBJ, game.popChangeSpeed)
         #Overpopulation
         if self.popOBJ < self.pop - 10:
-            self.happy -= min((self.pop - self.popObj)//10,10)
+            self.happy -= min((self.pop - self.popOBJ)//10,10)
 
         self.happiness += self.happy
         if self.happiness <= -100:
-            self.happiness = 100
+            self.happiness = -100
             print("City : %s has Unrest !" % self.name)
         else:
             if self.happiness >= 100:
