@@ -7,6 +7,7 @@ from arenbels.game.tools.pay import pay
 from arenbels.game.building import *
 from arenbels.game.tools.iterators import CityIterator
 from random import choice
+from collections import defaultdict
 
 class City:
 
@@ -16,7 +17,7 @@ class City:
         self.oldPop = 0#population at last turn
         self.oldPopBdg = 0#population at last turn due to buildings
         self.popOBJ = 0#population (Objective)
-        self.bdg = []#buildings
+        self.bdg = [CityCenter()]#buildings
         self.happiness = 0# in -100,+100
         self.happy = 0
         self.defaultHealth = 20
@@ -29,6 +30,7 @@ class City:
         if region is None:
             self.region = Region()
         self.history = []
+        self.owner = None
 
     def __iter__(self):
         ''' Returns the Iterator object CityIterator
@@ -37,7 +39,10 @@ class City:
         return CityIterator(self)
 
     def __repr__(self):
-        return "City %s:" % self.name + str((self.bdg))
+        dict = defaultdict(int)
+        for b in self.bdg:
+            dict[b.name] += 1
+        return "City %s:" % self.name + str((dict))
 
     def summary(self):
         txt = """ %s :
@@ -89,7 +94,8 @@ class City:
                 self.bdg.append(b)
                 pay(state,buil)
                 self.alreadybuilt = True
-                print(self.name,"built",b.name)
+                if b.name == "Cathedral":
+                    print(self.name,"built",b.name)
                 return True
             else:
                 return False
@@ -109,7 +115,7 @@ class City:
         for buil in self.bdg:
             buil.effect(state,self)
 
-        self.globalTrade += ceil((self.happiness - 90)/100 * self.pop)
+        self.globalTrade += max(-100,ceil((self.region.happiness[self.owner] - 90)/100 * self.pop))
         state.tradeOBJ += self.globalTrade
         #here self.pop is only the population with buildings.
         popBdg = self.pop
@@ -124,31 +130,34 @@ class City:
 
         #Diseases
         if self.health < 0:
-            self.happiness += self.health//10
+            self.region.happiness[self.owner] += self.health//10
             self.pop += self.health//20 + 1
         if self.health >= 20:
-            self.happiness += 1
-
+            self.region.happiness[self.owner] += 1
 
         #Season changes
         self.happy += self.region.seasonHappy
         self.agrarianWealth = ceil(self.agrarianWealth * ((100 + self.region.seasonBonus) /100))
 
-        self.happiness += self.happy
 
-        if self.happiness <= -100:
-            self.happiness = -100
+    def add_money(self,state):
+        """ To be executed after all cities of the region that are controlled by
+        this player have added their happiness"""
+
+        if self.region.happiness[self.owner] <= -100:
+            self.region.happiness[self.owner] = -100
             print("City : %s has Unrest !" % self.name)
         else:
-            if self.happiness >= 100:
-                self.happiness = 100
-                print("City : %s is Happy !" % self.name )
+            if self.region.happiness[self.owner] >= 100:
+                self.region.happiness[self.owner] = 100
+                #print("City : %s is Happy !" % self.name )
 
             #Adding money to the state
             state.treasure += self.localTrade
             state.treasure += self.agrarianWealth
-            self.moneyFromPop = ceil(self.pop * ((self.happiness+300) /400))
+            self.moneyFromPop = ceil(self.pop * ((self.region.happiness[self.owner]+300) /400))
             state.treasure += self.moneyFromPop
 
+        self.happiness = self.region.happiness[self.owner]
         self.history.append(self.send_info())
         self.alreadybuilt = False

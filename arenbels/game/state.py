@@ -66,6 +66,20 @@ class State:
     def gain(self):
         return self.treasure - self.old_t
 
+    def add_city(self,city):
+        city.owner = self
+        if city not in self.cities:
+            self.cities.append(city)
+
+    def add_cities(self,*args):
+        """ Adds the cities in argument """
+        for city in args:
+            if type(city) == type([]):
+                for c in city:
+                    self.add_city(c)
+            else:
+                self.add_city(city)
+
     def renew_tradeOBJ(self):
         #self.tradeOBJ = ceil(self.baseTradeOBJ * 0.1 + self.tradeOBJ * 0.9)
         pass
@@ -84,6 +98,13 @@ class State:
 
         for city in self.cities:
             city.end_turn(self,game)
+
+        for city in self.cities:
+            city.region.happiness[self] += city.happy
+
+        for city in self.cities:
+            city.add_money(self)
+
         self.trade += increase(self.trade,self.tradeOBJ,game.tradeChangeSpeed)
         self.trade = max(self.trade,0)
 
