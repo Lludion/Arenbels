@@ -12,10 +12,10 @@ class AI(Player):
         super().__init__(name=name,state=state)
         self.HAPPY_IMPROVE_LIST = [Inn,Bakery,FlowerMeadows,Restaurant,Chapel,Cathedral,HugePark,Monastery,Church]
         self.HEALTH_IMPROVE_LIST = [IceHarvest,MediumPark,Fountain,LittlePark,HugePark,IceHarvestResaler,Sewer,PavedRoads,Drains]
-        self.WEALTH_IMPROVE_LIST = [Market,Barn,Bakery,Forge,Factory,(House,Workshop,Workshop)]
+        self.WEALTH_IMPROVE_LIST = [Barn,Bakery,Forge,Factory,Stalls,Market,CoveredMarket,(House,Workshop,Workshop),Inn]
         self.HAPPY_DECREASE_LIST = [Barn,Quarter,Forge,Factory,(Fields,Workshop,Workshop)]
         self.HEALTH_DECREASE_LIST = [Inn,Barn,Factory,Forge,Fields]
-        self.WEALTH_DECREASE_LIST = [Chapel,Fountain,LittlePark,MediumPark,HugePark,PavedRoads,Sewer,Factory,Forge,Cathedral,(Quarter,Market,House)]
+        self.WEALTH_DECREASE_LIST = [Chapel,Fountain,LittlePark,MediumPark,HugePark,PavedRoads,Sewer,Factory,Forge,Cathedral,CoveredMarket,(Quarter,House)]
 
     def ai_add_bdg(self,city,buil):
         try:
@@ -47,8 +47,11 @@ class AI(Player):
                     for b in self.WEALTH_IMPROVE_LIST:
                         self.ai_add_bdg(city,b)
                 if city.happiness > 80:
-                    for b in self.HAPPY_DECREASE_LIST:
-                        self.ai_add_bdg(city,b)
+                    if random()>0.9:
+                        for b in self.HAPPY_DECREASE_LIST:
+                            self.ai_add_bdg(city,b)
+                        else:
+                            return
                 if city.health > 40:
                     for b in self.HEALTH_DECREASE_LIST:
                         self.ai_add_bdg(city,b)

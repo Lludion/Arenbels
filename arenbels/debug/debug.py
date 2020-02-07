@@ -50,3 +50,10 @@ if DEBUG:
     logger.warning("Level : Warning or Lower")
     logger.error("Level : Error or lower")
 logger.critical("Level : Any #This message should always be in the log")
+
+def f(*args):
+    """ formats a text like a print """
+    txt = ""
+    for a in args:
+        txt += str(a)
+    return txt

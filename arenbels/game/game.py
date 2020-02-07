@@ -1,4 +1,5 @@
 from arenbels.game.world import World
+from arenbels.debug.debug import logger,f
 
 class Game:
 
@@ -30,7 +31,7 @@ class Game:
             self.play_turn()
 
     def play_turn(self):
-        print("Turn ",self.turn)
+        logger.info("Turn "+str(self.turn))
         for player in self.players:
             player.play_turn(self)
         self.changeSeason()
@@ -39,15 +40,20 @@ class Game:
     def get_scores(self):
         scores = []
         for player in self.players:
-            print(player.name)
+            logger.info((player.name))
             poptot = 0
+            happytot = 0
             for city in player.state.cities:
                 poptot += city.pop
-            print("Population",poptot)
-            print("Treasure : ",player.state.treasure)
-            print("Last gain : ",player.state.gain())
-            score = int((poptot*100 + player.state.treasure + player.state.gain()*100) /1000)
-            print("SCORE: ",score)
+                happytot += city.happiness
+            logger.info(f("Population",poptot))
+            logger.info(f("Treasure : ",player.state.treasure))
+            logger.info(f("Last gain : ",player.state.gain()))
+            logger.info(f("Happiness : ",int(happytot/len(player.state.cities))))
+
+            score = int((poptot*100*((900+happytot/len(player.state.cities))/1000) + player.state.treasure + player.state.gain()*100) /1000)
+            logger.info(f("SCORE: ",score))
+
             scores.append((score))
         return sum(scores)
 

@@ -99,7 +99,7 @@ class City:
                 self.bdg.append(b)
                 pay(state,buil)
                 self.alreadybuilt = True
-                if b.name == "Cathedral":
+                if b.name == "Cathedral" or b.name == "Factory":
                     print(self.name,"built",b.name)
                 return True
             else:
@@ -160,7 +160,7 @@ class City:
             #Adding money to the state
             state.treasure += self.localTrade
             state.treasure += self.agrarianWealth
-            self.moneyFromPop = ceil(self.pop * ((self.region.happiness[self.owner]+300) /400))
+            self.moneyFromPop = ceil(self.pop * ((self.region.happiness[self.owner]+300) /400) / 10)
             state.treasure += self.moneyFromPop
 
         self.happiness = self.region.happiness[self.owner]

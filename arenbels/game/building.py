@@ -32,6 +32,7 @@ class CityCenter(Building):
         super().__init__()
         self.name = "City Center"
         self.type = ["State"]
+        self.cost = 200
 
     def effect(self,state,city):
         city.pop += 1
@@ -58,6 +59,8 @@ class Quarter(Building):
         self.name = "Quarter"
         self.type = ["Housing"]
         self.required = [House]
+        self.cost = 900
+        stackable = True
 
     def effect(self,state,city):
         city.popOBJ += 60
@@ -70,6 +73,7 @@ class Inn(Building):
         super().__init__()
         self.name = "Inn"
         self.type = ["Pub"]
+        self.cost = 600
 
     def effect(self,state,city):
         city.localTrade += 10 + ceil(min(city.oldPop / 100,30))
@@ -86,6 +90,7 @@ class Restaurant(Building):
         self.name = "Restaurant"
         self.type = ["Pub"]
         self.required = [Inn]
+        self.cost = 1300
 
     def effect(self,state,city):
         city.localTrade += 5
@@ -94,18 +99,43 @@ class Restaurant(Building):
         city.pop += 2
         city.popOBJ += 5
 
+class Stalls(Building):
+    def __init__(self):
+        super().__init__()
+        self.name = "Stalls"
+        self.type = ["Trade"]
+        self.cost = 300
+
+    def effect(self,state,city):
+        city.localTrade += 2
+        city.globalTrade += 5
+        city.health -= 1
+
 class Market(Building):
     def __init__(self):
         super().__init__()
         self.name = "Marketplace"
         self.type = ["Trade"]
-        self.cost = 1500
-        stackable = True
+        self.required = [Stalls]
+        self.cost = 1100
 
     def effect(self,state,city):
         city.localTrade += 2
         city.globalTrade += 40
         city.health -= 1
+
+class CoveredMarket(Building):
+    def __init__(self):
+        super().__init__()
+        self.name = "Covered Market"
+        self.type = ["Trade"]
+        self.required = [Market,Inn]
+        self.cost = 3000
+
+    def effect(self,state,city):
+        city.localTrade += 6
+        city.globalTrade += 100
+        city.happy -= 1
 
 class Fields(Building):
     def __init__(self):
@@ -162,7 +192,8 @@ class IceHarvestResaler(Building):
     def __init__(self):
         super().__init__()
         self.name = "Ice Resaler"
-        self.type = ["Market"]
+        self.type = ["Trade","Sanitation"]
+        self.cost = 2000
 
     def effect(self,state,city):
         city.globalTrade += 20
@@ -174,6 +205,7 @@ class Bakery(Building):
         super().__init__()
         self.name = "Bakery"
         self.type = ["Artisan"]
+        self.cost = 1200
 
     def effect(self,state,city):
         city.localTrade += 1
@@ -233,6 +265,22 @@ class Fountain(Building):
         city.globalTrade += 2
         city.happy += 1
         city.health += 20
+
+class LargeFountain(Building):
+    def __init__(self):
+        super().__init__()
+        self.name = "Fountain"
+        self.type = ["Environment","Sanitation"]
+        self.stackable = False
+        self.required = [Fountain,PavedRoads]
+        self.cost = 2500
+
+    def effect(self,state,city):
+        state.treasure -= 3
+        city.globalTrade += 8
+        city.popOBJ += 10
+        city.happy += 1
+        city.health += 30
 
 
 class Drains(Building):
