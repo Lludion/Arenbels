@@ -4,7 +4,7 @@ from arenbels.game.tools.parse import grid_to_world
 class World:
 
     def __init__(self):
-        self.grid = [["" for _ in range(20)]for _ in range(20)]
+        self.grid = []
         self.regions = []
 
     def from_grid(self,filename):
@@ -12,6 +12,21 @@ class World:
 
     def get_regions(self):
         return regions
+
+    def add_region(self,region):
+        """ Adds one region to the World """
+        region.game = self
+        if region not in self.regions:
+            self.regions.append(region)
+
+    def add_regions(self,*args):
+        """ Adds the regions in argument """
+        for region in args:
+            if type(region) == type([]):
+                for r in region:
+                    self.add_region(r)
+            else:
+                self.add_region(region)
 
 class WorldRegion:
 

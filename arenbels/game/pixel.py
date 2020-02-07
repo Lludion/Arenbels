@@ -18,7 +18,7 @@ class Pixel:
         self.y = y
 
     def __repr__(self):
-        return "(%s)" % (self.region)
+        return "<%s>" % (self.region)
 
     def get_color(self):
         if self.swim:

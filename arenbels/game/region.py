@@ -38,6 +38,9 @@ class Region(WorldRegion):
     def ruralSum(self):
         return self.springBonus + self.winterBonus + self.autumnBonus + self.summerBonus
 
+    def __repr__(self):
+        return self.name
+
 class Desertic(Region):
     """ Very hot summers. Good food production all year round."""
 
