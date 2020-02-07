@@ -101,6 +101,7 @@ class State:
 
         for city in self.cities:
             city.region.happiness[self] += city.happy
+            city.region.happiness[self] += city.region.seasonHappy
 
         for city in self.cities:
             city.add_money(self)

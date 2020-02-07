@@ -18,7 +18,7 @@ class Game:
         #Whether it prints things.
         self.verbose = False
         #Name of the infos in the city_history panel
-        self.city_info = ["Population","Happiness","Health","Global Trade","$Population","$Farming","$Local","$Industry"]
+        self.city_info = ["Population","Happiness","Health","Global Trade","$Population","$Farming","$Local","$Industry","Happy"]
         #Name of the infos in the state_history panel
         self.state_info = ["Treasure","Trade","Global Health","Gain"]
         #Number of turns it takes to reach the actual tradeOBJ value

@@ -72,7 +72,7 @@ class City:
 
         useful for numpy display"""
 
-        return (self.pop,self.happiness,self.health,self.globalTrade,self.moneyFromPop,self.agrarianWealth,self.localTrade,self.industry)
+        return (self.pop,self.happiness,self.health,self.globalTrade,self.moneyFromPop,self.agrarianWealth,self.localTrade,self.industry,self.happy)
 
     def get_history(self):
         return np.array(self.history)
@@ -137,13 +137,12 @@ class City:
 
         #Diseases
         if self.health < 0:
-            self.region.happiness[self.owner] += self.health//10
+            self.happy += self.health//10
             self.pop += self.health//20 + 1
         if self.health >= 20:
-            self.region.happiness[self.owner] += 1
+            self.happy += 1
 
         #Season changes
-        self.happy += self.region.seasonHappy
         self.agrarianWealth = ceil(self.agrarianWealth * ((100 + self.region.seasonBonus) /100))
 
 
