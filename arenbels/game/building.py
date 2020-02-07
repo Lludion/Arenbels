@@ -65,7 +65,7 @@ class Quarter(Building):
     def effect(self,state,city):
         city.popOBJ += 60
         city.happy -= 3
-        city.health -= 10
+        city.health -= 5
 
 class Inn(Building):
 

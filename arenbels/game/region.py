@@ -96,7 +96,7 @@ class Icy(Region):
         super().__init__(name,game)
 
         #Bonus to agrarian wealth
-        self.winterBonus = -100
+        self.winterBonus = -50
         self.springBonus = -50
         self.summerBonus = -20
         self.autumnBonus = -30
