@@ -36,6 +36,21 @@ class Game:
         self.changeSeason()
         self.turn += 1
 
+    def get_scores(self):
+        scores = []
+        for player in self.players:
+            print(player.name)
+            poptot = 0
+            for city in player.state.cities:
+                poptot += city.pop
+            print("Population",poptot)
+            print("Treasure : ",player.state.treasure)
+            print("Last gain : ",player.state.gain())
+            score = int((poptot*100 + player.state.treasure + player.state.gain()*100) /1000)
+            print("SCORE: ",score)
+            scores.append((player.name,score))
+        return sum(scores)
+
     def changeSeason(self):
         """ changes the season.
         0 : spring
