@@ -156,6 +156,7 @@ class FlowerMeadows(Building):
         self.name = "Flower Meadows"
         self.type = ["Agrarian","Environment"]
         self.cost = 200
+        self.requirement = [Requirement(health=30)]
 
     def effect(self,state,city):
         state.treasure -= 15
@@ -379,6 +380,7 @@ class Forge(Building):
         super().__init__()
         self.name = "Forge"
         self.type = ["Industry"]
+        self.required = [Requirement(pop=200,health=0)]
 
     def effect(self,state,city):
         city.industry += 50
@@ -419,3 +421,17 @@ class No(Building):
         self.type = []
         self.cost = 9999999
         self.required = [No]
+
+class Requirement:
+
+    def __init__(self,pop=0,health=-99999):
+        self.pop_req = pop
+        self.health_req = health
+
+    def fails_requirement(self,city):
+        if city.pop < self.pop_req:
+            return False
+        if city.health < self.health_req:
+            return False
+        return True
+

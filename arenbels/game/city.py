@@ -95,7 +95,10 @@ class City:
                     if b.name in self:
                         return False
                 for req in b.required:
-                    if req().name not in self:
+                    if type(req) != type(Requirement()):
+                        if req().name not in self:
+                            return False
+                    elif req.fails_requirement(self):
                         return False
                 self.bdg.append(b)
                 pay(state,buil)
