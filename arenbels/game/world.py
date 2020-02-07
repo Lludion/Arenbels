@@ -19,6 +19,7 @@ class WorldRegion:
         self.coordinates = {}
         self.pop = 0
         self.happiness = defaultdict(int)
+        self.cities = []
 
     def set_pop(self):
         self.pop = 0

@@ -48,7 +48,7 @@ class Game:
             print("Last gain : ",player.state.gain())
             score = int((poptot*100 + player.state.treasure + player.state.gain()*100) /1000)
             print("SCORE: ",score)
-            scores.append((player.name,score))
+            scores.append((score))
         return sum(scores)
 
     def changeSeason(self):

@@ -15,7 +15,7 @@ class AI(Player):
         self.WEALTH_IMPROVE_LIST = [Market,Barn,Bakery,Forge,Factory,(House,Workshop,Workshop)]
         self.HAPPY_DECREASE_LIST = [Barn,Quarter,Forge,Factory,(Fields,Workshop,Workshop)]
         self.HEALTH_DECREASE_LIST = [Inn,Barn,Factory,Forge,Fields]
-        self.WEALTH_DECREASE_LIST = [Chapel,Fountain,LittlePark,MediumPark,HugePark,PavedRoads,Sewer,Factory,Forge,Cathedral,House]
+        self.WEALTH_DECREASE_LIST = [Chapel,Fountain,LittlePark,MediumPark,HugePark,PavedRoads,Sewer,Factory,Forge,Cathedral,(Quarter,Market,House)]
 
     def ai_add_bdg(self,city,buil):
         try:
@@ -25,14 +25,18 @@ class AI(Player):
             b = buil()
         if "Agrarian" in b.type :
             if city.region.ruralSum() <= 0:
-                buil = House
+                if random() < 0.95:
+                    buil = (House, Market)
+            elif city.region.ruralSum() <= 40:
+                if random() < 0.5:
+                    buil = (House, Market)
         return city.add_bdg(self.state,buil)
 
     def turn_execution(self,game):
         """ Execution of the chosen actions during a turn."""
 
         for city in unhappyfirst(self.state.cities):
-            if city.happiness < -30:
+            if city.happiness < -30 or city.happy < -4 or (city.happy < -1 and city.happiness < 50) or (city.happy < 0 and city.happiness < 10):
                 for b in self.HAPPY_IMPROVE_LIST:
                     self.ai_add_bdg(city,b)
             else:#Enforcing a stronger priority for this type of buildings

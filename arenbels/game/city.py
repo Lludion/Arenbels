@@ -76,6 +76,11 @@ class City:
     def get_history(self):
         return np.array(self.history)
 
+    def set_region(self,region):
+        self.region = region
+        if self not in region.cities:
+            region.cities.append(self)
+
     def add_bdg(self,state,buil):
         """ One can construct up to one building per city per turn."""
         if not self.alreadybuilt:
