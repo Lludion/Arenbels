@@ -381,7 +381,7 @@ class Forge(Building):
         self.type = ["Industry"]
 
     def effect(self,state,city):
-        city.localTrade += 50
+        city.industry += 50
         city.happy -= 2
 
 class Workshop(Building):
@@ -393,7 +393,7 @@ class Workshop(Building):
         self.cost = 2000
 
     def effect(self,state,city):
-        city.localTrade += 100
+        city.industry += 100
         city.happy -= 4
         city.health -= 10
 
@@ -406,7 +406,7 @@ class Factory(Building):
         self.required = [Workshop,Forge]
 
     def effect(self,state,city):
-        city.localTrade += 500
+        city.industry += 500
         city.globalTrade += 100
         city.happy -= 15
         city.health -= 50

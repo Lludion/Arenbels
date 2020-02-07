@@ -68,10 +68,11 @@ class City:
         $(pop)
         $(agr)
         $(tra)
+        $(ind)
 
         useful for numpy display"""
 
-        return (self.pop,self.happiness,self.health,self.globalTrade,self.moneyFromPop,self.agrarianWealth,self.localTrade)
+        return (self.pop,self.happiness,self.health,self.globalTrade,self.moneyFromPop,self.agrarianWealth,self.localTrade,self.industry)
 
     def get_history(self):
         return np.array(self.history)
@@ -116,6 +117,7 @@ class City:
         self.localTrade = 0
         self.globalTrade = 0
         self.agrarianWealth = 0
+        self.industry = 0
 
         for buil in self.bdg:
             buil.effect(state,self)
@@ -160,6 +162,7 @@ class City:
             #Adding money to the state
             state.treasure += self.localTrade
             state.treasure += self.agrarianWealth
+            state.treasure += self.industry
             self.moneyFromPop = ceil(self.pop * ((self.region.happiness[self.owner]+300) /400) / 10)
             state.treasure += self.moneyFromPop
 

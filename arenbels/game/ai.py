@@ -18,6 +18,9 @@ class AI(Player):
         self.WEALTH_DECREASE_LIST = [Chapel,Fountain,LittlePark,MediumPark,HugePark,PavedRoads,Sewer,Factory,Forge,Cathedral,CoveredMarket,(Quarter,House)]
 
     def ai_add_bdg(self,city,buil):
+        """ Adds a building in a smart way (takes into account factors such as
+        climate, etc ...
+        """
         try:
             b = buil()
         except TypeError:
