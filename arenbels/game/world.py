@@ -1,4 +1,5 @@
 from collections import defaultdict
+from arenbels.game.tools.parse import grid_to_world
 
 class World:
 
@@ -6,6 +7,8 @@ class World:
         self.grid = [["" for _ in range(20)]for _ in range(20)]
         self.regions = []
 
+    def from_grid(self,filename):
+        self.l,self.h,self.grid = grid_to_world(filename)
 
     def get_regions(self):
         return regions
