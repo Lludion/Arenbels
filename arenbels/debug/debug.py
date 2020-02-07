@@ -1,55 +1,73 @@
-
 from sys import argv
 
-
-#importing module
+#importing module of log
 import logging
 
-#Create and configure logger
-logging.basicConfig(filename="log.log",
-                    format='%(asctime)s %(levelname)s\t%(message)s',
-                    filemode='w')
+def init_logger(p=False):
+    """Create and configure a logger, then returns it
 
-#Creating an object
-logger = logging.getLogger()
+    In: p , whether the activated level is printed
+        argv is used :
+            List of all debugging levels:
+            python3 arenbels.py ld  -> Debug
+            python3 arenbels.py li  -> Info
+            python3 arenbels.py lw  -> Warning
+            python3 arenbels.py le  -> Error
+            python3 arenbels.py lc  -> Critical
+            python3 arenbels.py     -> Info
 
-#Setting the threshold of logger to DEBUG
-if len(argv)>1:
-    if argv[1] == 'd':
-        logger.setLevel(logging.DEBUG)
-    elif argv[1] == 'i':
-        logger.setLevel(logging.INFO)
-    elif argv[1] == 'w':
-        logger.setLevel(logging.WARNING)
-    elif argv[1] == 'e':
-        logger.setLevel(logging.ERROR)
-    elif argv[1] == 'c':
-        logger.setLevel(logging.CRITICAL)
+    Out: logger object"""
+    logging.basicConfig(filename="log.log",
+                        format='%(asctime)s %(levelname)s\t%(message)s',
+                        filemode='w')
+
+    #Creating an object
+    logger = logging.getLogger()
+
+    #Setting the threshold of logger to DEBUG
+    if len(argv)>1:
+        if 'ld' in argv:
+            logger.setLevel(logging.DEBUG)
+        elif 'li' in argv:
+            logger.setLevel(logging.INFO)
+        elif 'lw' in argv:
+            logger.setLevel(logging.WARNING)
+        elif 'le' in argv:
+            logger.setLevel(logging.ERROR)
+        elif 'lc' in argv:
+            logger.setLevel(logging.CRITICAL)
+        else:
+            print("""
+            List of all debugging levels:
+            python3 arenbels.py ld  -> Debug
+            python3 arenbels.py li  -> Info
+            python3 arenbels.py lw  -> Warning
+            python3 arenbels.py le  -> Error
+            python3 arenbels.py lc  -> Critical
+            python3 arenbels.py     -> Info
+                    """)
+            logger.setLevel(logging.INFO)
     else:
-        print("""
-        List of all debugging levels:
-        python3 protocol.py d  -> Debug
-        python3 protocol.py i  -> Info
-        python3 protocol.py w  -> Warning
-        python3 protocol.py e  -> Error
-        python3 protocol.py c  -> Critical
-        python3 protocol.py    -> Info
-                """)
         logger.setLevel(logging.INFO)
-else:
-    logger.setLevel(logging.INFO)
 
-#True iff debugging state
-DEBUG = logger.level < logging.CRITICAL
+    if p:
+        print_levels(logger)
+
+    return logger
+
+def print_levels(logger):
+    """ Prints the levels at which is the logger """
+    #True iff debugging state
+    DEBUG = logger.level < logging.CRITICAL
 
 
-#Test messages
-if DEBUG:
-    logger.debug("Level : Debug ")
-    logger.info("Level : Info or Lower ")
-    logger.warning("Level : Warning or Lower")
-    logger.error("Level : Error or lower")
-logger.critical("Level : Any #This message should always be in the log")
+    #Test messages
+    if DEBUG:
+        logger.debug("Level : Debug ")
+        logger.info("Level : Info or Lower ")
+        logger.warning("Level : Warning or Lower")
+        logger.error("Level : Error or lower")
+    logger.critical("Level : Any #This message should always be in the log")
 
 def f(*args):
     """ formats a text like a print """
@@ -57,3 +75,5 @@ def f(*args):
     for a in args:
         txt += str(a)
     return txt
+
+logger = init_logger()
