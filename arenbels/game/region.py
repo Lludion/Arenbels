@@ -1,9 +1,13 @@
 
-class Region:
+from arenbels.game.world import WorldRegion
+
+class Region(WorldRegion):
 
     def __init__(self,name="RegionName",game=None):
+        super().__init__()
         self.name = name
         self.game = game
+
         #Bonus to agrarian wealth
         self.seasonBonus = 0
         self.winterBonus = -30
