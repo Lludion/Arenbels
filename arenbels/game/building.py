@@ -417,21 +417,21 @@ class No(Building):
     """ Used in AI to say: do not build anything. Used with random.choose"""
     def __init__(self):
         super().__init__()
-        self.name = "None"
-        self.type = []
-        self.cost = 9999999
-        self.required = [No]
+        self.required = [Requirement(impossible=True)]
 
 class Requirement:
 
-    def __init__(self,pop=0,health=-99999):
+    def __init__(self,pop=0,health=-99999,impossible=False):
         self.pop_req = pop
         self.health_req = health
+        self.impossible = impossible
 
     def fails_requirement(self,city):
         if city.pop < self.pop_req:
             return False
         if city.health < self.health_req:
+            return False
+        if self.impossible:
             return False
         return True
 

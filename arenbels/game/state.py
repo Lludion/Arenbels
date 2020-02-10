@@ -99,9 +99,14 @@ class State:
         for city in self.cities:
             city.end_turn(self,game)
 
-        for city in self.cities:
-            city.region.happiness[self] += city.happy
-            city.region.happiness[self] += city.region.seasonHappy
+        for region in game.world.regions:
+            ok = False
+            for city in region.cities:
+                if city.owner is self:
+                    ok = True
+                    region.happiness[self] += city.happy
+            if ok:
+                city.region.happiness[self] += city.region.seasonHappy
 
         for city in self.cities:
             city.add_money(self)
