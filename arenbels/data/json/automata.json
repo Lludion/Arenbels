@@ -1,0 +1,4 @@
+{"empty": "empty|1|0,s→0;|0=void.png,",
+"coin": "coin|6|0,s→1;1,s→2;2,s→3;3,s→4;4,s→5;5,s→0;|0=coin/6.png,1=coin/1.png,2=coin/2.png,3=coin/3.png,4=coin/4.png,5=coin/5.png,",
+"key": "key|1|0,s→0;|0=img_key.png,",
+"castle": "castle|1|0,s→0;|0=castle.png,"}

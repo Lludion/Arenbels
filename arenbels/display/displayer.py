@@ -1,12 +1,17 @@
 import pygame
 import json
 from shutil import copy2
+from arenbels.display.camera import Camera
+from arenbels.display.engine import Vector
+from arenbels.tools import create_img
 
 class Displayer:
 
     def __init__(self,redirect=False):
         self.options = {}
         self._window = None
+        self.world = None
+
         if redirect: self.redirect()
         self.init_window()
 
@@ -59,6 +64,15 @@ class Displayer:
         self._window = pygame.display.set_mode((self.options["DISPLAYSIZE_X"], self.options["DISPLAYSIZE_Y"]),self.options["modeECRAN"])#1920*1080 for instance
         self._window.set_alpha(None) #To speed things up
 
+
+    def init_images(self):
+        """loads all images into self.dict_img, blits the first background"""
+        #Images
+        with open("arenbels/data/json/img.json", "r") as read_file:
+            self.dict_img = json.load(read_file,object_hook=create_img)
+        #self._window.blit(self.dict_img["img_background"],(0,0))
+        self.flip()
+
     def close(self):
         if pygame.display.get_init():
             self._window = None
@@ -66,4 +80,17 @@ class Displayer:
             pygame.quit()
         else:
             self._window = None
+
+    def link_world(self,w):
+        """ loads the world """
+        self.world = w
+
+    def init_camera(self):
+        self.cam = Camera()
+        self.cam.set_dimension(Vector(1000,1000))
+        self.cam.set_win(self._window)
+        self.cam.link_world(self.world)
+
+    def flip(self):
+        pygame.display.flip()
 

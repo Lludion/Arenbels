@@ -11,7 +11,7 @@ class World:
         self.l,self.h,self.grid = grid_to_world(filename)
 
     def get_regions(self):
-        return regions
+        return self.regions
 
     def add_region(self,region):
         """ Adds one region to the World """
