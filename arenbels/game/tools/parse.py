@@ -11,7 +11,11 @@ def grid_to_world(filename):
         for l in file.readlines():
             if state == 0:
                 if l[0] != '#':
-                    coresp_dict[l[0]] = l[1:-1]
+                    if l[-2] == '#':#test if maritime region
+                        new_reg = ("sea",l[1:-2])
+                    else:
+                        new_reg = ("reg",l[1:-1])
+                    coresp_dict[l[0]] = new_reg
                 else:
                     state = 1
             elif state == 1:
@@ -53,5 +57,6 @@ def grid_to_world(filename):
                 if c_y < height:
                     for c_x in range(length):
                         grid[c_x][c_y].region = coresp_dict[l[c_x]]
+
                     c_y += 1
         return length,height,grid

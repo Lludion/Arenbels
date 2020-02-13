@@ -1,10 +1,10 @@
 
-from arenbels.game.world import WorldRegion
+from arenbels.game.worldRegion import WorldRegion
 
 class Region(WorldRegion):
 
     def __init__(self,name="RegionName",game=None):
-        super().__init__()
+        super().__init__(name)
         self.name = name
         self.game = game
 
@@ -40,6 +40,30 @@ class Region(WorldRegion):
 
     def __repr__(self):
         return self.name
+
+class Sea(WorldRegion):
+
+    def __init__(self,name="SeaName",game=None):
+        super().__init__(name)
+        self.name = name
+        self.game = game
+
+        #Bonus to maritime wealth
+        self.seasonBonus = 0
+        self.winterBonus = -30
+        self.springBonus = 0
+        self.summerBonus = 30
+        self.autumnBonus = 50
+
+        self.seasonHappy = 0
+        self.winterHappy = 0
+        self.springHappy = 0
+        self.summerHappy = 0
+        self.autumnHappy = 0
+
+    def __repr__(self):
+        return self.name
+
 
 class Desertic(Region):
     """ Very hot summers. Good food production all year round."""
