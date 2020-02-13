@@ -54,8 +54,8 @@ class Displayer:
         width = i.current_w
         height = i.current_h
         if width < self.options["DISPLAYSIZE_X"] or height < self.options["DISPLAYSIZE_Y"]:
-                self.options["DISPLAYSIZE_Y"] = height
-                self.options["DISPLAYSIZE_X"] = width
+                self.options["DISPLAYSIZE_Y"] = min(height,self.options["DISPLAYSIZE_Y"])
+                self.options["DISPLAYSIZE_X"] = min(width,self.options["DISPLAYSIZE_Y"])
                 with open("arenbels/data/json/options.json","w") as f:
                     f.write(json.dumps(self.options))
 
@@ -84,6 +84,22 @@ class Displayer:
     def link_world(self,w):
         """ loads the world """
         self.world = w
+
+    def display_world(self):
+        w = self.world
+        leng = w.l#len(w.grid)
+        heig = w.h#len(w.grid[0])
+        if leng>heig:
+            size = self.options["DISPLAYSIZE_Y"]/heig
+        else:
+            size = self.options["DISPLAYSIZE_X"]/leng
+        for line in w.grid:
+            for p in line:
+                col = p.get_color()
+                pSurf = pygame.Surface((size,size))
+                pSurf.fill(col)
+                self._window.blit(pSurf ,(size*p.x,size*p.y))
+        self.flip()
 
     def init_camera(self):
         self.cam = Camera()
