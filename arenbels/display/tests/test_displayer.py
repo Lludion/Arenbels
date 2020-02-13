@@ -17,3 +17,10 @@ sn.create_sps("castle")
 fen.cam.aff([sn],1)
 fen.flip()
 
+##
+
+fen.display_world()
+
+for region in fen.world.regions:
+    print(region.name)
+    print(region.__class__.__name__)
