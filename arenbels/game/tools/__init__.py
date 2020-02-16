@@ -1,1 +1,3 @@
-print("Currently reading the game.tools folder")
+#game.tools folder
+
+from arenbels.game.tools.iterators import *

@@ -20,7 +20,7 @@ fen.flip()
 ##
 
 fen.display_world()
-
+##
 for region in fen.world.regions:
     print(region.name)
     print(region.__class__.__name__)

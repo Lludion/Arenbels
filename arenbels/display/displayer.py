@@ -4,7 +4,7 @@ from shutil import copy2
 from arenbels.display.camera import Camera
 from arenbels.display.engine import Vector
 from arenbels.tools import create_img
-
+from arenbels.display.tools import blitpix
 class Displayer:
 
     def __init__(self,redirect=False):
@@ -81,24 +81,17 @@ class Displayer:
         else:
             self._window = None
 
+    def reopen(self):
+        """ To reopen the window after a self.close() """
+        self._window = pygame.display.set_mode((self.options["DISPLAYSIZE_X"], self.options["DISPLAYSIZE_Y"]),self.options["modeECRAN"])#1920*1080 for instance
+
     def link_world(self,w):
         """ loads the world """
         self.world = w
 
     def display_world(self):
-        w = self.world
-        leng = w.l#len(w.grid)
-        heig = w.h#len(w.grid[0])
-        if leng>heig:
-            size = self.options["DISPLAYSIZE_Y"]/heig
-        else:
-            size = self.options["DISPLAYSIZE_X"]/leng
-        for line in w.grid:
-            for p in line:
-                col = p.get_color()
-                pSurf = pygame.Surface((size,size))
-                pSurf.fill(col)
-                self._window.blit(pSurf ,(size*p.x,size*p.y))
+        for p in self.world.grid:
+            blitpix(self,p)
         self.flip()
 
     def init_camera(self):

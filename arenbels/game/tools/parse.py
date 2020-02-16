@@ -1,5 +1,6 @@
 
-from arenbels.game.pixel import Pixel
+from arenbels.game.dpixel import DPixel
+from arenbels.tools import Grid
 
 def grid_to_world(filename):
     """
@@ -23,7 +24,7 @@ def grid_to_world(filename):
                 state = 2
             elif state == 2:
                 height = int(l)
-                grid = [[Pixel(x=x,y=y) for y in range(height)] for x in range(length)]
+                grid = [[DPixel(x=x,y=y) for y in range(height)] for x in range(length)]
                 state = 3
             elif state == 3:
                 if l[0] == '#':
@@ -59,4 +60,4 @@ def grid_to_world(filename):
                         grid[c_x][c_y].region = coresp_dict[l[c_x]]
 
                     c_y += 1
-        return length,height,grid
+        return length,height,Grid(grid)

@@ -2,11 +2,12 @@
 from arenbels.game.tools.parse import grid_to_world
 from arenbels.debug import logging
 from arenbels.game.region import Region,Sea
+from arenbels.tools import Grid
 
 class World:
 
     def __init__(self):
-        self.grid = []
+        self.grid = Grid()
         self.regions = []
         self.game = None
 
@@ -21,22 +22,21 @@ class World:
         return None
 
     def regions_from_grid(self):
-        for line in self.grid:
-            for p in line:
-                (type,name) = p.region
-                reg = self.in_regions(name)
-                if reg is None:
-                    if type == "sea":
-                        newreg = Sea(name)
-                    elif type == "reg":
-                        newreg = Region(name)
-                    else:
-                        logging.warning("Unknown region type.")
-                        newreg = Region(name)
-                    self.add_region(newreg)
-                    p.region = newreg
+        for p in self.grid:
+            (type,name) = p.region
+            reg = self.in_regions(name)
+            if reg is None:
+                if type == "sea":
+                    newreg = Sea(name)
+                elif type == "reg":
+                    newreg = Region(name)
                 else:
-                    p.region = reg
+                    logging.warning("Unknown region type.")
+                    newreg = Region(name)
+                self.add_region(newreg)
+                p.region = newreg
+            else:
+                p.region = reg
 
     def get_regions(self):
         return self.regions
