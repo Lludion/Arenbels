@@ -136,7 +136,7 @@ class Icy(Region):
 class Tundra(Region):
     """ Rough winter, bad springs, happy summer& autumn"""
 
-    def __init__(self,name="IcyName",game=None):
+    def __init__(self,name="TundraName",game=None):
         super().__init__(name,game)
 
         #Bonus to agrarian wealth

@@ -10,11 +10,15 @@ class EventHandler(Displayer):
     def catchWm(self):
         """ catches events on the worldMap """
         grid = self.world.grid
-
+        pygame.time.Clock().tick(self.options["FPS"])
+        keys = pygame.key.get_pressed()
         for event in pygame.event.get():
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_ESCAPE:
                     self.stop()
+                if event.key == pygame.K_s:
+                    if keys[pygame.K_RCTRL]:
+                        print("Save will be implemented!")
             if event.type == pygame.MOUSEBUTTONDOWN:
                 mx,my = pygame.mouse.get_pos()
                 if event.button == 1:

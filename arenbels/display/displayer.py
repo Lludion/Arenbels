@@ -5,6 +5,8 @@ from arenbels.display.camera import Camera
 from arenbels.display.engine import Vector
 from arenbels.tools import create_img
 from arenbels.display.tools import blitpix
+
+
 class Displayer:
 
     def __init__(self,redirect=False):

@@ -1,6 +1,6 @@
 
 from arenbels.game import game
-from arenbels.display import EventManager
+from arenbels.display import EventHandler
 from arenbels.display.engine import SpriteNode
 
 fen = EventHandler()
