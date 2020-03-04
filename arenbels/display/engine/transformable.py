@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 import numpy as np
-from engine.transform import Transform
-from engine.vector import Vector
-from engine.polygone import *
+from arenbels.display.engine.transform import Transform
+from arenbels.display.engine.vector import Vector
+from arenbels.display.engine.polygon import *
 import copy
 
 """ A transformable is a 2D Object reprensented by its coordinates X and Y (position), it rotation and it scale. Those objects will be manipulated by Transform objects (matrix) to compute game mechanics and physics"""

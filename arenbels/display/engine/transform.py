@@ -3,9 +3,9 @@
 import numpy as np
 import numpy.linalg as linalg
 
-from error.exception import WrongSizeMatrix
+from arenbels.debug.exception import WrongSizeMatrix
 
-from engine.vector import Vector
+from arenbels.display.engine.vector import Vector
 
 """ Transform objects represents a transformation made by a matrix on 2D objects. It needs to be able to compute translations, rotations and scalling to apply them to transformables (and hit boxes). A transform object represents a 3x3 matrix made of a 2x2 upper left part for rotation and scaling and the last column for translations. They can be combined (and that's where we'll need other coefficients) to make more complex transformations """
 

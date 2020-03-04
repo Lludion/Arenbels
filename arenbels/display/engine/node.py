@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
-from engine.transformable import Transformable
-from engine.vector import Vector
+from arenbels.display.engine.transformable import Transformable
+from arenbels.display.engine.vector import Vector
 
 """ A node is a bigger object than a Transformable. In fact it represents an architecture of transformable. When a Transform is applied to a node it is also applied to all its children like in a tree. This architecture is not used yet in our project but will be very useful later. """
 

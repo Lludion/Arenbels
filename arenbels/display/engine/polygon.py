@@ -1,8 +1,8 @@
 
 import numpy as np
 
-from engine.vector import Vector
-from engine.transform import Transform
+from arenbels.display.engine.vector import Vector
+from arenbels.display.engine.transform import Transform
 import random
 
 DEBUG = False

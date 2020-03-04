@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-from error.exception import TransitionUndefined
+from arenbels.debug.exception import TransitionUndefined
 from collections import defaultdict
 from json import load as jsload
 

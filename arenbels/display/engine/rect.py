@@ -4,7 +4,7 @@ from arenbels.display.engine.vector import Vector
 from arenbels.display.engine.transform import Transform
 from arenbels.display.engine.polygon import Polygon
 
-from error.exception import WrongRectWidth,WrongRectHeight
+from arenbels.debug.exception import WrongRectWidth,WrongRectHeight
 
 import pygame
 import numpy as np
