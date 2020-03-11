@@ -18,13 +18,17 @@ class EventHandler(Displayer):
                     self.stop()
                 if event.key == pygame.K_s:
                     if keys[pygame.K_RCTRL]:
-                        print("Save will be implemented!")
+                        self.world.to_grid("toto.arb")
             if event.type == pygame.MOUSEBUTTONDOWN:
                 mx,my = pygame.mouse.get_pos()
                 if event.button == 1:
                     for p in grid:
                         if xyinbounds(mx,my,p):
                             print(mx,my,p.x*p.size,p.y*p.size,p.region.name)
+        self.display_world()
+        self.display_attention()
+        self.flip()
+
     def stop(self):
         self.cont = False
         self.close()

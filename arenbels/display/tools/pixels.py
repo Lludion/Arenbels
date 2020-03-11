@@ -1,12 +1,21 @@
 from pygame import Surface
+from pygame.transform import smoothscale
 
-def blitpix(dis,p):
-    """ Blits the pixel 'p' of size 'size' onto the Surface 'win' = dis._window."""
-    col = p.get_color()
+def blitpix(dis,p,img=None):
+    """ Blits the pixel 'p' of size 'size' onto the Surface 'win' = dis._window.
+    if img=None
+
+    if img != None:
+        the said image is blit onto the surface"""
     size = sizepix(dis)
-    pSurf = Surface((size,size))
-    pSurf.fill(col)
-    dis._window.blit(pSurf ,pospix(None,p,size))
+    if img == None:
+        col = p.get_color()
+        pSurf = Surface((size,size))
+        pSurf.fill(col)
+        dis._window.blit(pSurf ,pospix(None,p,size))
+    else:
+        pSurf = smoothscale(img ,(int(size*4/3),int(size*4/3)))
+        dis._window.blit(pSurf ,(int(pospix(None,p,size)[0]-size/6),int(pospix(None,p,size)[1]-size/6)))
 
 def sizepix(dis):
     """ returns the size of a pixel

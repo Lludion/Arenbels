@@ -4,7 +4,7 @@ from shutil import copy2
 from arenbels.display.camera import Camera
 from arenbels.display.engine import Vector
 from arenbels.tools import create_img
-from arenbels.display.tools import blitpix
+from arenbels.display.tools import blitpix,xyinbounds
 
 
 class Displayer:
@@ -94,7 +94,12 @@ class Displayer:
     def display_world(self):
         for p in self.world.grid:
             blitpix(self,p)
-        self.flip()
+
+    def display_attention(self):
+        mx,my = pygame.mouse.get_pos()
+        for p in self.world.grid:
+            if xyinbounds(mx,my,p):
+                blitpix(self,p,self.dict_img["surfWhite"])
 
     def init_camera(self):
         self.cam = Camera()

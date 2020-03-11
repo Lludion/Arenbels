@@ -2,7 +2,8 @@ from arenbels.display.engine import Pixel
 
 GROUNDCOLOR = (150,120,90)
 WATERCOLOR = (30,75,130)
-MOUNTAINCOLOR = (230,240,250)
+#MOUNTAINCOLOR = (230,240,250)
+MOUNTAINCOLOR = (59,182,97)
 
 class DPixel(Pixel):
 
