@@ -20,5 +20,5 @@ class Grid:
     def __iter__(self):
         ''' Returns the Iterator object GridIterator
 
-        returns the hashes of the buildings in the city'''
+        returns the pixels in the natural ordering '''
         return GridIterator(self)

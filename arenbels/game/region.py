@@ -45,15 +45,16 @@ class Sea(WorldRegion):
 
     def __init__(self,name="SeaName",game=None):
         super().__init__(name)
+        self.sea = True
         self.name = name
         self.game = game
 
         #Bonus to maritime wealth
         self.seasonBonus = 0
-        self.winterBonus = -30
+        self.winterBonus = -50
         self.springBonus = 0
-        self.summerBonus = 30
-        self.autumnBonus = 50
+        self.summerBonus = 0
+        self.autumnBonus = 0
 
         self.seasonHappy = 0
         self.winterHappy = 0

@@ -20,6 +20,21 @@ class DPixel(Pixel):
     def __repr__(self):
         return "<%s>" % (self.region)
 
+    def type_num(self):
+        if self.swim:
+            if self.walk:
+                return "3"
+            else:
+                return "2"
+        else:
+            if self.walk:
+                return "1"
+            else:
+                return "0"
+
+    def reg_num(self):
+        return self.region._num_save
+
     def get_color(self):
         if self.swim:
             return WATERCOLOR

@@ -12,8 +12,14 @@ class WorldRegion:
         self.cities = []
         self.sea = False
         self.name = name
+        self._num_save = None
 
     def set_pop(self):
         self.pop = 0
         for city in self.cities:
             self.pop += city.pop
+
+    def add_pixel(self,pix):
+        pix.region = self
+        self.coordinates.append(pix)
+
