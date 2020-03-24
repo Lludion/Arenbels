@@ -6,10 +6,11 @@ from arenbels.game.tools.cost import cost
 from arenbels.game.tools.pay import pay
 from arenbels.game.building import *
 from arenbels.game.tools.iterators import CityIterator
+from arenbels.game.worldCity import WorldCity
 from random import choice
 from collections import defaultdict
 
-class City:
+class City(WorldCity):
 
     def __init__(self,name="CityName",region=None):
         self.name = name#It is important that this name stays unique during the whole game.
